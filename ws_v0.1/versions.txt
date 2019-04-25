@@ -1,0 +1,5 @@
+prototipo v0.1
+	+ Personalización de GUI
+	+ Construcción del CRUD Desarrollador
+	+ Construcción del CRUD Proyecto
+	+ Definición inicial del menú

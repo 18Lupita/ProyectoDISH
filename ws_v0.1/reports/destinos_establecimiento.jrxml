@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="destinos" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="671ec89d-2ca9-49e5-813d-31465eb51f42">
+	<property name="ireport.zoom" value="1.1586575189467518"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="establecimientoID" class="java.lang.String"/>
+	<parameter name="edificioID" class="java.lang.String"/>
+	<parameter name="pisoID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+ e.nombre as edificio,
+ p.nombre as piso,
+ o.nombre as oficina,
+ es.nombre as nombre_establecimiento
+FROM
+ edificios e,
+ pisos p,
+ oficinas o,
+ establecimientos es
+WHERE
+ e.id=p.edificio_id AND
+ p.id=o.piso_id AND
+ e.establecimiento_id = $P{establecimientoID} AND
+ $X{IN, e."id", edificioID} AND
+ $X{IN, p."id", pisoID}
+ORDER BY
+ e.nombre,p.nombre,o.nombre]]>
+	</queryString>
+	<field name="edificio" class="java.lang.String"/>
+	<field name="piso" class="java.lang.String"/>
+	<field name="oficina" class="java.lang.String"/>
+	<field name="nombre_establecimiento" class="java.lang.String"/>
+	<group name="establecimiento">
+		<groupExpression><![CDATA[$F{nombre_establecimiento}+$F{edificio}+$F{piso}]]></groupExpression>
+		<groupHeader>
+			<band height="98">
+				<rectangle>
+					<reportElement x="0" y="76" width="572" height="20" backcolor="#6D6E70" uuid="6b26c947-e81f-4370-a996-ac604b09786e"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement x="0" y="0" width="309" height="20" forecolor="#CA002D" uuid="74a93b06-80a1-44dd-b134-b712505eb118"/>
+					<textElement>
+						<font fontName="Ubuntu" size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre_establecimiento}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="479" y="78" width="91" height="16" forecolor="#FFFFFF" uuid="2d467bec-68a5-432a-b113-de194e14de28"/>
+					<textElement textAlignment="Right">
+						<font fontName="Ubuntu" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Oficinas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="52" width="74" height="20" forecolor="#6D6E70" uuid="0d2a339d-7162-4fe9-b56a-7b07ee515145"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Piso: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="32" width="74" height="20" forecolor="#6D6E70" uuid="e4258535-9af6-43c2-96ab-77759eb0f9a6"/>
+					<textElement textAlignment="Right">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Edificio:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="86" y="32" width="474" height="20" forecolor="#6D6E70" uuid="c91526c4-7659-4a32-8c7d-799a7b678174"/>
+					<textElement verticalAlignment="Top">
+						<font size="12" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{edificio}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="86" y="52" width="474" height="20" forecolor="#6D6E70" uuid="e73257f5-21e3-4c4e-874c-2b8008cf3dd8"/>
+					<textElement verticalAlignment="Top">
+						<font size="12" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{piso}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band height="752" splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="85">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="96" y="38" width="476" height="20" forecolor="#6D6E70" backcolor="#6D6E70" uuid="190a2729-f8bf-4f5a-a629-4189f9673d17"/>
+				<textElement textAlignment="Right">
+					<font fontName="Ubuntu"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement mode="Transparent" x="0" y="68" width="572" height="1" forecolor="#CA002D" backcolor="#CA002D" uuid="b6d146b5-1cd8-4049-a896-749091124c02"/>
+				<graphicElement>
+					<pen lineWidth="10.0" lineColor="#CA002D"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement mode="Transparent" x="179" y="0" width="393" height="38" forecolor="#CA002D" backcolor="#FFFFFF" uuid="e7e434f0-f8e6-4c3f-a8c3-2db43e89a6cb"/>
+				<textElement textAlignment="Right">
+					<font fontName="Ubuntu" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Destinos (Oficinas)]]></text>
+			</staticText>
+			<image>
+				<reportElement x="2" y="0" width="150" height="60" uuid="c26e694f-6c07-49ba-b30c-72ef9f7feb81"/>
+				<imageExpression><![CDATA["http://visitanet.com.mx/vnet/assets/logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="3" width="568" height="15" uuid="ff8d8ba2-f1d7-4772-b25c-750d98fc0020"/>
+				<textElement textAlignment="Right">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{oficina}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="21" width="572" height="7" backcolor="#6D6E70" uuid="a97feb7d-2666-4f1f-aa9c-ba594f9f147c"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="28" width="572" height="26" backcolor="#CA002D" uuid="6dbcb2fd-e476-493e-bd00-dea1931a39e9"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="457" y="28" width="80" height="20" forecolor="#FFFFFF" uuid="f311f276-6c2c-4f18-ad5c-9501c56ceebf"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="537" y="28" width="23" height="20" forecolor="#FFFFFF" uuid="43daed1f-0e63-47e1-ae06-d706b408db66"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="2" y="15" width="570" height="15" uuid="80291887-7af8-4b4d-9354-4b124def1eed"/>
+				<textElement>
+					<font fontName="Ubuntu" size="8"/>
+				</textElement>
+				<text><![CDATA[No existen registros que mostrar por el momento]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

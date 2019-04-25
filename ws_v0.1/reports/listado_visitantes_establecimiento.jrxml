@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listado_visitantes" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="671ec89d-2ca9-49e5-813d-31465eb51f42">
+	<property name="ireport.zoom" value="1.1586575189467518"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="establecimientoID" class="java.lang.String"/>
+	<parameter name="fechaInicio" class="java.lang.String"/>
+	<parameter name="fechaTermino" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+ v.nombre,
+ v.empresa,
+ LPAD(v.id::text, 7, '0') as gafete,
+ v.datein as entrada,
+ v.dateout as salida,
+ v.visita_persona as persona,
+ o.nombre as destino,
+ es.nombre as nombre_establecimiento
+FROM
+ visitantes v,
+ oficinas o,
+ establecimientos es
+WHERE
+ v.establecimiento_id=es.id AND
+ v.oficina_id=o.id AND
+ v.datein BETWEEN $P{fechaInicio} AND $P{fechaTermino}
+ v.establecimiento_id = $P{establecimientoID}
+ORDER BY
+ v.id DESC]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="empresa" class="java.lang.String"/>
+	<field name="gafete" class="java.lang.String"/>
+	<field name="entrada" class="java.sql.Timestamp"/>
+	<field name="salida" class="java.sql.Timestamp"/>
+	<field name="persona" class="java.lang.String"/>
+	<field name="destino" class="java.lang.String"/>
+	<field name="nombre_establecimiento" class="java.lang.String"/>
+	<group name="establecimiento">
+		<groupExpression><![CDATA[$F{nombre_establecimiento}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<rectangle>
+					<reportElement x="0" y="28" width="572" height="20" backcolor="#6D6E70" uuid="6b26c947-e81f-4370-a996-ac604b09786e"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="381" y="30" width="94" height="16" forecolor="#FFFFFF" uuid="0f01c126-125d-422d-b0e8-1753fce49d5b"/>
+					<textElement>
+						<font fontName="Ubuntu" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Entrada]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="220" y="30" width="157" height="15" forecolor="#FFFFFF" uuid="7501258a-528c-491d-83c8-c18f063aa000"/>
+					<textElement>
+						<font fontName="Ubuntu" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Destino]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="59" y="30" width="158" height="15" forecolor="#FFFFFF" uuid="5e7e3887-a601-47b4-9b3b-2ab738956c06"/>
+					<textElement>
+						<font fontName="Ubuntu" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Visita]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="0" y="0" width="309" height="20" forecolor="#CA002D" uuid="74a93b06-80a1-44dd-b134-b712505eb118"/>
+					<textElement>
+						<font fontName="Ubuntu" size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre_establecimiento}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="3" y="31" width="52" height="15" forecolor="#FFFFFF" uuid="cfafad2b-021a-4d91-8001-7c84b8b3dbdb"/>
+					<textElement>
+						<font fontName="Ubuntu" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Gafete]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="479" y="30" width="91" height="16" forecolor="#FFFFFF" uuid="2d467bec-68a5-432a-b113-de194e14de28"/>
+					<textElement>
+						<font fontName="Ubuntu" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Salida]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band height="752" splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="85">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="96" y="38" width="476" height="20" forecolor="#6D6E70" backcolor="#6D6E70" uuid="190a2729-f8bf-4f5a-a629-4189f9673d17"/>
+				<textElement textAlignment="Right">
+					<font fontName="Ubuntu"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement mode="Transparent" x="0" y="68" width="572" height="1" forecolor="#CA002D" backcolor="#CA002D" uuid="b6d146b5-1cd8-4049-a896-749091124c02"/>
+				<graphicElement>
+					<pen lineWidth="10.0" lineColor="#CA002D"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement mode="Transparent" x="179" y="0" width="393" height="38" forecolor="#CA002D" backcolor="#FFFFFF" uuid="e7e434f0-f8e6-4c3f-a8c3-2db43e89a6cb"/>
+				<textElement textAlignment="Right">
+					<font fontName="Ubuntu" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Listado de visitantes]]></text>
+			</staticText>
+			<image>
+				<reportElement x="2" y="0" width="150" height="60" uuid="c26e694f-6c07-49ba-b30c-72ef9f7feb81"/>
+				<imageExpression><![CDATA["http://visitanet.com.mx/vnet/assets/logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="381" y="4" width="94" height="15" uuid="2296fb12-58aa-42a0-8879-da51ab680fcc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entrada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="59" y="4" width="158" height="15" uuid="ff8d8ba2-f1d7-4772-b25c-750d98fc0020"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="22" width="157" height="15" uuid="cd50ee73-a5ca-4bcf-a769-e139f6519282"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{destino}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="3" y="4" width="52" height="15" uuid="57b58b52-661f-4721-bf03-e0e755307989"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gafete}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="479" y="4" width="91" height="15" uuid="74674317-4bef-4684-9d60-539026fc60ac"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{salida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="4" width="157" height="15" uuid="128462a4-7086-4cc5-bb99-cb09bcc99c26"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{persona}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="59" y="22" width="158" height="15" uuid="92acddf6-e4b8-4f1d-ba26-933e376ab533"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="21" width="572" height="7" backcolor="#6D6E70" uuid="a97feb7d-2666-4f1f-aa9c-ba594f9f147c"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="28" width="572" height="26" backcolor="#CA002D" uuid="6dbcb2fd-e476-493e-bd00-dea1931a39e9"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="457" y="28" width="80" height="20" forecolor="#FFFFFF" uuid="f311f276-6c2c-4f18-ad5c-9501c56ceebf"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="537" y="28" width="23" height="20" forecolor="#FFFFFF" uuid="43daed1f-0e63-47e1-ae06-d706b408db66"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="2" y="15" width="570" height="15" uuid="80291887-7af8-4b4d-9354-4b124def1eed"/>
+				<textElement>
+					<font fontName="Ubuntu" size="8"/>
+				</textElement>
+				<text><![CDATA[No existen registros que mostrar por el momento]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>
